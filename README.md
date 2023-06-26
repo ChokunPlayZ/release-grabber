@@ -57,3 +57,4 @@ everything this script relys on to function
  - [qs](https://www.npmjs.com/package/qs)
  - [console-stamp](https://www.npmjs.com/package/console-stamp)
  - [axios](https://www.npmjs.com/package/axios)
+ - [PyMedUSA](https://pymedusa.com/)
