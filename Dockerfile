@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /
+WORKDIR /app/downloader
 
 COPY package*.json ./
 

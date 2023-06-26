@@ -2,7 +2,7 @@ require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
 const irc = require("irc");
 const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
-const qbit = require("./lib/qbittorrent");
+const qbit = require("./lib/qBittorrent");
 const utils = require("./lib/utils");
 
 const isInDocker = fs.existsSync("/.dockerenv");
