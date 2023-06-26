@@ -49,6 +49,22 @@ cd release-grabber
 docker compose up --build -d
 ```
 wait for it to run and you should be set
+
+## Updating
+1. Pull the repo
+```
+git pull
+```
+2. Run the script
+2.1. PM2,
+```
+pm2 restart Release\ Grabber
+```
+2.2. Docker,
+```
+docker compose up --build -d
+```
+3. Enjoy!
 # Dependencies
 everything this script relys on to function
  - [nodjs irc](https://www.npmjs.com/package/irc)
