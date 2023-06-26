@@ -4,7 +4,7 @@ const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const qbit = require("./lib/qBittorrent");
 const utils = require("./lib/utils");
-const medusa = require("./lib/medusa")
+const medusa = require("./lib/medusa");
 
 const isInDocker = fs.existsSync("/.dockerenv");
 
@@ -21,8 +21,8 @@ if (!isInDocker) {
 }
 
 console.log(`---------------------------`);
-console.log(`ChokunPlayZ Torrent Updater, V2.5, IRC edition`);
-console.log(`Written By: ChokunPlayZ`);
+console.log(`Release Grabber, V2.6.5, IRC edition`);
+console.log(`Written By: ChokunPlayZ, Regex by ChatGPT`);
 console.log(`https://github.com/ChokunPlayZ/`);
 console.log(`---------------------------`);
 console.log(`Mode: ${mode}`);
