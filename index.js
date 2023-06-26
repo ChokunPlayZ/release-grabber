@@ -4,6 +4,7 @@ const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const qbit = require("./lib/qBittorrent");
 const utils = require("./lib/utils");
+const medusa = require("./lib/medusa")
 
 const isInDocker = fs.existsSync("/.dockerenv");
 
@@ -78,7 +79,7 @@ client.addListener("message#subsplease", async function (nick, message) {
     });
   }
 
-  const lookup = await utils.medusaGuessitLookup(
+  const lookup = await medusa.GuessitLookup(
     config.MEDUSA_URL,
     config.MEDUSA_API_KEY,
     relinfo.fileName
