@@ -1,12 +1,13 @@
 require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
 const irc = require("irc");
-const axios = require("axios");
 const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 const qbit = require("./lib/qbittorrent");
 const utils = require("./lib/utils");
 
 const isInDocker = fs.existsSync("/.dockerenv");
+
+const footer = "Release Grabber"
 
 let webhook;
 
@@ -72,7 +73,7 @@ client.addListener("message#subsplease", async function (nick, message) {
           ])
           .setColor("#00A5FF")
           .setTimestamp()
-          .setFooter({ text: "SP Grabber, Brought to life by ChatGPT" }),
+          .setFooter({ text: footer }),
       ],
     });
   }
@@ -116,7 +117,7 @@ client.addListener("message#subsplease", async function (nick, message) {
             .setDescription(`qBittorrent Login Failed`)
             .setColor("#F90000")
             .setTimestamp()
-            .setFooter({ text: "SP Grabber, Brought to life by ChatGPT" }),
+            .setFooter({ text: footer }),
         ],
       });
     }
@@ -146,7 +147,7 @@ client.addListener("message#subsplease", async function (nick, message) {
           ])
           .setColor("#90EE90")
           .setTimestamp()
-          .setFooter({ text: "SP Grabber, Brought to life by ChatGPT" }),
+          .setFooter({ text: footer }),
       ],
     });
   }
@@ -168,7 +169,7 @@ client.addListener("registered", async function (message) {
           )
           .setColor("#00FF3F")
           .setTimestamp()
-          .setFooter({ text: "SP Grabber, Brought to life by ChatGPT" }),
+          .setFooter({ text: footer }),
       ],
     });
   }
