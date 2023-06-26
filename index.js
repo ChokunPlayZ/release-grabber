@@ -78,7 +78,7 @@ client.addListener("message#subsplease", async function (nick, message) {
     });
   }
 
-  const lookup = await medusaGuessitLookup(
+  const lookup = await utils.medusaGuessitLookup(
     config.MEDUSA_URL,
     config.MEDUSA_API_KEY,
     relinfo.fileName
