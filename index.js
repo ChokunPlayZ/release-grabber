@@ -2,10 +2,13 @@ require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
 const irc = require("irc");
 const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
+
+// load custom libs
 const qbit = require("./lib/qBittorrent");
 const utils = require("./lib/utils");
 const medusa = require("./lib/medusa");
 
+// Check if docker is connected
 const isInDocker = fs.existsSync("/.dockerenv");
 
 const footer = "Release Grabber"
@@ -176,12 +179,8 @@ client.addListener("registered", async function (message) {
   }
 });
 
-client.addListener("error", async function (message) {
-  console.log(`${config.IRC_ADDRESS} sent an error\n${message}`);
-});
+client.addListener("error", console.log(`IRC Client Error\n${message}`));
 
-client.addListener("motd", async function (motd) {
-  console.log(`MOTD Received`);
-});
+client.addListener("motd", console.log(`MOTD Received`));
 
 client.connect();
