@@ -1,8 +1,8 @@
 #  release-grabber
 a simple nodejs script that sits in SubsPlease IRC and grab a new release when it comes out  
-designed to work with [pyMedUSA](https://pymedusa.com/)  
+designed to work with [pyMedusa](https://pymedusa.com/)  
 ## Why?
-for the past months or so, I switched to a proper PVR on my streaming stack, I have a problem with pyMedUSA not being able to grabbing the release fast enough, the delay is usually 10 minutes, which is not what I wanted, I used to make pyMedUSA run a daily search every 1 minute but that also spam subsplease server with request, not what I wanted to do, autobrr does not work with pyMedUSA, so I come up with this
+for the past months or so, I switched to a proper PVR on my streaming stack, I have a problem with pyMedusa not being able to grabbing the release fast enough, the delay is usually 10 minutes, which is not what I wanted, I used to make pyMedusa run a daily search every 1 minute but that also spam subsplease server with request, not what I wanted to do, autobrr does not work with pyMedusa, so I come up with this
 ## How it works
 this script will first login to rizon IRC, #subsplease channel and sit there, waiting for a message  
 when the message comes in, it verify the sender, match the data and pull the filename and url from the message (the script is only designed to pull 1080p releases, the option to pick the resolution might come later)  
@@ -73,4 +73,4 @@ everything this script relys on to function
  - [qs](https://www.npmjs.com/package/qs)
  - [console-stamp](https://www.npmjs.com/package/console-stamp)
  - [axios](https://www.npmjs.com/package/axios)
- - [PyMedUSA](https://pymedusa.com/)
+ - [PyMedusa](https://pymedusa.com/)
