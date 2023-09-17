@@ -179,8 +179,12 @@ client.addListener("registered", async function (message) {
   }
 });
 
-client.addListener("error", console.log(`IRC Client Error\n${message}`));
+client.addListener("error", async function (message) {
+  console.log(`IRC Client Error\n${message}`)
+});
 
-client.addListener("motd", console.log(`MOTD Received`));
+client.addListener("motd", async function (message) {
+  console.log(`MOTD Received`);
+});
 
 client.connect();
