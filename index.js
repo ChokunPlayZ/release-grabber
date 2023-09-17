@@ -56,7 +56,7 @@ if (Boolean(config.WEBHOOK_URL)) {
 client.addListener("message#subsplease", async function (nick, message) {
   const msg = String(message);
 
-  if (nick !== "Katou" || !msg.includes("[Release]")) {
+  if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
     return;
   }
 
