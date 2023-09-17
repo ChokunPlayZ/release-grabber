@@ -1,4 +1,4 @@
-require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
+// require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
 const irc = require("irc");
 const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
@@ -16,7 +16,7 @@ const footer = "Release Grabber"
 let webhook;
 
 if (!isInDocker) {
-  config = require("dotenv").config().parsed;
+  config = process.env;
   mode = "Local";
 } else {
   config = process.env;
@@ -25,7 +25,7 @@ if (!isInDocker) {
 
 console.log(`---------------------------`);
 console.log(`Release Grabber, V2.6.5, IRC edition`);
-console.log(`Written By: ChokunPlayZ, Regex by ChatGPT`);
+console.log(`Written By: ChokunPlayZ`);
 console.log(`https://github.com/ChokunPlayZ/`);
 console.log(`---------------------------`);
 console.log(`Mode: ${mode}`);
@@ -61,7 +61,7 @@ client.addListener("message#subsplease", async function (nick, message) {
   }
 
   const relinfo = utils.extractReleaseInformation(msg);
-  console.log(`New Release: ${relinfo.fileName}`);
+  console.log(`New Release: ${relinfo.torrentName}`);
 
   if (relinfo.resolution !== "1080p") {
     return;
@@ -73,7 +73,7 @@ client.addListener("message#subsplease", async function (nick, message) {
         new EmbedBuilder()
           .setTitle("New Release")
           .addFields([
-            { name: "File Name", value: `${relinfo.fileName}`, inline: false },
+            { name: "File Name", value: `${relinfo.torrentName}`, inline: false },
           ])
           .setColor("#00A5FF")
           .setTimestamp()
@@ -85,23 +85,23 @@ client.addListener("message#subsplease", async function (nick, message) {
   const lookup = await medusa.GuessitLookup(
     config.MEDUSA_URL,
     config.MEDUSA_API_KEY,
-    relinfo.fileName
+    relinfo.torrentName
   );
 
   if (lookup.data.show == null) {
     console.log(
-      `"${relinfo.fileName}" does not exist in Medusa db, not doing anything`
+      `"${relinfo.torrentName}" does not exist in Medusa db, not doing anything`
     );
     return;
   }
 
   if (lookup.data.show.config.paused == true) {
-    console.log(`"${relinfo.fileName}" is paused, not downloading`);
+    console.log(`"${relinfo.torrentName}" is paused, not downloading`);
     return;
   }
 
   console.log(
-    `"${relinfo.fileName}" marked to be downloaded, sending download command`
+    `"${relinfo.torrentName}" marked to be downloaded, sending download command`
   );
   console.log("Logging into qBittorrent");
 
@@ -146,7 +146,7 @@ client.addListener("message#subsplease", async function (nick, message) {
           .setTitle("Download Command Sent!")
           .setDescription(`Sent File to qBit`)
           .addFields([
-            { name: "FileName", value: relinfo.fileName, inline: false },
+            { name: "FileName", value: relinfo.torrentName, inline: false },
             { name: "FileSize", value: relinfo.fileSize, inline: false },
           ])
           .setColor("#90EE90")
