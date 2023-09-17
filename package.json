@@ -1,5 +1,5 @@
 {
-  "name": "sp-downloader",
+  "name": "release-grabber",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,10 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.4.0",
-    "console-stamp": "^3.1.1",
     "discord.js": "^14.11.0",
-    "dotenv": "^16.2.0",
-    "irc": "^0.5.2",
+    "matrix-org-irc": "^2.2.0",
     "qs": "^6.11.2"
   }
 }

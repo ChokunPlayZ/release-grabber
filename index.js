@@ -1,5 +1,5 @@
-require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
-const irc = require("irc");
+// require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
+import irc from "matrix-org-irc";
 const fs = require("fs");
 const { EmbedBuilder, WebhookClient } = require("discord.js");
 
@@ -14,9 +14,11 @@ const isInDocker = fs.existsSync("/.dockerenv");
 const footer = "Release Grabber"
 
 let webhook;
+let config;
+let mode;
 
 if (!isInDocker) {
-  config = require("dotenv").config().parsed;
+  config = process.env;
   mode = "Local";
 } else {
   config = process.env;
@@ -47,6 +49,9 @@ console.log(`Connecting to ${config.IRC_ADDRESS} as ${config.IRC_USERNAME}`);
 var client = new irc.Client(config.IRC_ADDRESS, config.IRC_USERNAME, {
   channels: ["#subsplease"],
   autoConnect: false,
+  autoRejoin: true,
+  floodProtection: true,
+  floodProtectionDelay: 1000,
 });
 
 if (Boolean(config.WEBHOOK_URL)) {
@@ -177,7 +182,14 @@ client.addListener("registered", async function (message) {
       ],
     });
   }
+  console.log("me -> NickServ : `IDENTIFY <REDACTED>`")
+  await client.say("NickServ", `IDENTIFY ${config.NICKSERV_PASS}`);
 });
+
+client.addListener("notice", async function (nick, to, text, message) {
+  if (nick == "Global") return;
+  console.log(`${nick} -> me : ${text}`);
+}); 
 
 client.addListener("error", async function (message) {
   console.log(`IRC Client Error\n${message}`)
