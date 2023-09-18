@@ -23,9 +23,8 @@ if (!isInDocker) {
 }
 
 console.log(`---------------------------`);
-console.log(`Release Grabber, V2.6.5, IRC edition`);
-console.log(`Written By: ChokunPlayZ`);
-console.log(`https://github.com/ChokunPlayZ/`);
+console.log(`Release Grabber, V3, Bun Edition`);
+console.log(`https://github.com/ChokunPlayZ/release-grabber`);
 console.log(`---------------------------`);
 console.log(`Mode: ${mode}`);
 console.log(`In Container: ${isInDocker}`);
