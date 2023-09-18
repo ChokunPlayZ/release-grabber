@@ -187,7 +187,7 @@ client.addListener("registered", async () => {
 client.addListener("notice", async (nick, to, text, message) => {
   if (nick == "Global") return;
   console.log(`${nick} -> me : ${text}`);
-  if (text.includes("You are now identified")) {
+  if (text.includes("you are now recognized.")) {
     if (Boolean(config.WEBHOOK_URL)) {
       await webhook.send({
         embeds: [
