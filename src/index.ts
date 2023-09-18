@@ -57,12 +57,14 @@ if (Boolean(config.WEBHOOK_URL)) {
 client.addListener("message#subsplease", async (nick, message) => {
   const msg = String(message);
 
+  console.log(`${nick} -> #subsplease : ${msg}`);
+
   if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
     return;
   }
 
   const relinfo = utils.extractReleaseInformation(msg);
-  console.log(`New Release: ${relinfo.fileName}`);
+  console.log(`New Release: ${relinfo.torrentName}`);
 
   if (relinfo.resolution !== "1080p") {
     return;
@@ -74,7 +76,7 @@ client.addListener("message#subsplease", async (nick, message) => {
         new EmbedBuilder()
           .setTitle("New Release")
           .addFields([
-            { name: "File Name", value: `${relinfo.fileName}`, inline: false },
+            { name: "File Name", value: `${relinfo.torrentName}`, inline: false },
           ])
           .setColor("#00A5FF")
           .setTimestamp()
@@ -86,23 +88,23 @@ client.addListener("message#subsplease", async (nick, message) => {
   const lookup = await medusa.GuessitLookup(
     config.MEDUSA_URL,
     config.MEDUSA_API_KEY,
-    relinfo.fileName
+    relinfo.torrentName
   );
 
   if (lookup.data.show == null) {
     console.log(
-      `"${relinfo.fileName}" does not exist in Medusa db, not doing anything`
+      `"${relinfo.torrentName}" does not exist in Medusa db, not doing anything`
     );
     return;
   }
 
   if (lookup.data.show.config.paused == true) {
-    console.log(`"${relinfo.fileName}" is paused, not downloading`);
+    console.log(`"${relinfo.torrentName}" is paused, not downloading`);
     return;
   }
 
   console.log(
-    `"${relinfo.fileName}" marked to be downloaded, sending download command`
+    `"${relinfo.torrentName}" marked to be downloaded, sending download command`
   );
   console.log("Logging into qBittorrent");
 
@@ -147,7 +149,7 @@ client.addListener("message#subsplease", async (nick, message) => {
           .setTitle("Download Command Sent!")
           .setDescription(`Sent File to qBit`)
           .addFields([
-            { name: "FileName", value: relinfo.fileName, inline: false },
+            { name: "FileName", value: relinfo.torrentName, inline: false },
             { name: "FileSize", value: relinfo.fileSize, inline: false },
           ])
           .setColor("#90EE90")
