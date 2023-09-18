@@ -1,6 +1,5 @@
 #  release-grabber
 a simple bun script that sits in SubsPlease IRC and grab a new release when it comes out  
-STILL A WORK IN PROGRESS DO NOT RUN IN PROD  
 designed to work with [pyMedusa](https://pymedusa.com/)  
 ## Why?
 for the past months or so, I switched to a proper PVR on my streaming stack, I have a problem with pyMedusa not being able to grabbing the release fast enough, the delay is usually 10 minutes, which is not what I wanted, I used to make pyMedusa run a daily search every 1 minute but that also spam subsplease server with request, not what I wanted to do, autobrr does not work with pyMedusa, so I come up with this
