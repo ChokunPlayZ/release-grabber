@@ -1,5 +1,5 @@
 #  release-grabber
-a simple nodejs script that sits in SubsPlease IRC and grab a new release when it comes out  
+a simple bun script that sits in SubsPlease IRC and grab a new release when it comes out  
 designed to work with [pyMedusa](https://pymedusa.com/)  
 ## Why?
 for the past months or so, I switched to a proper PVR on my streaming stack, I have a problem with pyMedusa not being able to grabbing the release fast enough, the delay is usually 10 minutes, which is not what I wanted, I used to make pyMedusa run a daily search every 1 minute but that also spam subsplease server with request, not what I wanted to do, autobrr does not work with pyMedusa, so I come up with this
@@ -55,22 +55,20 @@ wait for it to run and you should be set
 ```
 git pull
 ```
-2. Run the script
-2.1. PM2,
+2. Run the script  
+2.1. PM2,  
 ```
 pm2 restart Release\ Grabber
 ```
-2.2. Docker,
+2.2. Docker,  
 ```
 docker compose up --build -d
 ```
 3. Enjoy!
 # Dependencies
 everything this script relys on to function
- - [nodjs irc](https://www.npmjs.com/package/irc)
+ - [matrix org irc](https://www.npmjs.com/package/matrix-org-irc)
  - [discord.js](https://www.npmjs.com/package/discord.js)
- - [dotenv](https://www.npmjs.com/package/dotenv)
  - [qs](https://www.npmjs.com/package/qs)
- - [console-stamp](https://www.npmjs.com/package/console-stamp)
- - [axios](https://www.npmjs.com/package/axios)
+ - [axios](https://www.npmjs.com/package/axios) (waiting to be removed)
  - [PyMedusa](https://pymedusa.com/)

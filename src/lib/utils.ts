@@ -1,4 +1,4 @@
-function extractReleaseInformation(input) {
+function extractReleaseInformation(input: string) {
   const releaseRegex = /\[Release\] (.*(SubsPlease).*?)\.?(mkv)? \((\d+.?\d*[KMGTP]?B)\) - .* - (.*)/;
   const releaseMatch = input.match(releaseRegex);
 
