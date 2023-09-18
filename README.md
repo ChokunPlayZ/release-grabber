@@ -56,22 +56,20 @@ wait for it to run and you should be set
 ```
 git pull
 ```
-2. Run the script
-2.1. PM2,
+2. Run the script  
+2.1. PM2,  
 ```
 pm2 restart Release\ Grabber
 ```
-2.2. Docker,
+2.2. Docker,  
 ```
 docker compose up --build -d
 ```
 3. Enjoy!
 # Dependencies
 everything this script relys on to function
- - [nodjs irc](https://www.npmjs.com/package/irc)
+ - [matrix org irc](https://www.npmjs.com/package/matrix-org-irc)
  - [discord.js](https://www.npmjs.com/package/discord.js)
- - [dotenv](https://www.npmjs.com/package/dotenv)
  - [qs](https://www.npmjs.com/package/qs)
- - [console-stamp](https://www.npmjs.com/package/console-stamp)
- - [axios](https://www.npmjs.com/package/axios)
+ - [axios](https://www.npmjs.com/package/axios) (waiting to be removed)
  - [PyMedusa](https://pymedusa.com/)
