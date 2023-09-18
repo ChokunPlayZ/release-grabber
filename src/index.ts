@@ -1,7 +1,6 @@
-// require("console-stamp")(console, "[dd.mm.yyyy][HH:MM:ss]");
 import irc from "matrix-org-irc";
-const fs = require("fs");
-const { EmbedBuilder, WebhookClient } = require("discord.js");
+import fs from "fs";
+import {EmbedBuilder, WebhookClient} from "discord.js";
 
 // load custom libs
 const qbit = require("./lib/qBittorrent");
@@ -12,22 +11,20 @@ const medusa = require("./lib/medusa");
 const isInDocker = fs.existsSync("/.dockerenv");
 
 const footer = "Release Grabber"
+const config = process.env;
 
 let webhook;
-let config;
 let mode;
 
 if (!isInDocker) {
-  config = process.env;
   mode = "Local";
 } else {
-  config = process.env;
   mode = "Docker";
 }
 
 console.log(`---------------------------`);
 console.log(`Release Grabber, V2.6.5, IRC edition`);
-console.log(`Written By: ChokunPlayZ, Regex by ChatGPT`);
+console.log(`Written By: ChokunPlayZ`);
 console.log(`https://github.com/ChokunPlayZ/`);
 console.log(`---------------------------`);
 console.log(`Mode: ${mode}`);
@@ -58,7 +55,7 @@ if (Boolean(config.WEBHOOK_URL)) {
   webhook = new WebhookClient({ url: config.WEBHOOK_URL });
 }
 
-client.addListener("message#subsplease", async function (nick, message) {
+client.addListener("message#subsplease", async (nick, message) => {
   const msg = String(message);
 
   if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
@@ -166,7 +163,7 @@ client.addListener("message#subsplease", async function (nick, message) {
   console.log("Logged Out!");
 });
 
-client.addListener("registered", async function (message) {
+client.addListener("registered", async () => {
   console.log(`Connected to ${config.IRC_ADDRESS},`);
   if (Boolean(config.WEBHOOK_URL)) {
     await webhook.send({
@@ -186,17 +183,13 @@ client.addListener("registered", async function (message) {
   await client.say("NickServ", `IDENTIFY ${config.NICKSERV_PASS}`);
 });
 
-client.addListener("notice", async function (nick, to, text, message) {
+client.addListener("notice", async (nick, to, text, message) => {
   if (nick == "Global") return;
   console.log(`${nick} -> me : ${text}`);
 }); 
 
-client.addListener("error", async function (message) {
+client.addListener("error", async (message) => {
   console.log(`IRC Client Error\n${message}`)
-});
-
-client.addListener("motd", async function (message) {
-  console.log(`MOTD Received`);
 });
 
 client.connect();

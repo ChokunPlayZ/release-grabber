@@ -1,4 +1,4 @@
-function extractReleaseInformation(input) {
+function extractReleaseInformation(input: string) {
   const releaseRegex = /\[Release\] (.*(SubsPlease).*?)\.?(mkv)? \((\d+.?\d*[KMGTP]?B)\) - .* - (.*)/;
   const releaseMatch = input.match(releaseRegex);
 
@@ -9,10 +9,10 @@ function extractReleaseInformation(input) {
     const resolution = resolutionMatch ? resolutionMatch[1] : null;
 
     return {
-      fileName,
+      torrentName,
       releaseGroup,
       resolution,
-      fileSize,
+      torrentSize,
       torrentUrl,
     };
   }

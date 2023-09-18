@@ -6,7 +6,7 @@ const http2Agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-async function login(qburl, username, password) {
+async function login(qburl: string, username: string, password: string) {
   try {
     const response = await axios({
       method: "POST",
