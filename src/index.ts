@@ -187,6 +187,20 @@ client.addListener("registered", async () => {
 client.addListener("notice", async (nick, to, text, message) => {
   if (nick == "Global") return;
   console.log(`${nick} -> me : ${text}`);
+  if (text.includes("You are now identified")) {
+    if (Boolean(config.WEBHOOK_URL)) {
+      await webhook.send({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle("NickServ Identified!")
+            .setDescription(`Identified as \`${config.IRC_USERNAME}\``)
+            .setColor("#00FF3F")
+            .setTimestamp()
+            .setFooter({ text: footer }),
+        ],
+      });
+    }
+  }
 }); 
 
 client.addListener("error", async (message) => {
