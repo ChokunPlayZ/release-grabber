@@ -59,7 +59,8 @@ client.addListener("message#subsplease", async (nick, message) => {
 
   console.log(`${nick} -> #subsplease : ${msg}`);
 
-  if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
+  // if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
+  if (nick !== "Katou" || !msg.includes("[Release]")) {
     return;
   }
 
