@@ -22,8 +22,12 @@ if (!isInDocker) {
   mode = "Docker";
 }
 
+let resolutions;
+
+resolutions = config.ALLOWED_RESOLUTION.replace(" ", "").split(",");
+
 console.log(`---------------------------`);
-console.log(`Release Grabber, V3, Bun Edition`);
+console.log(`Release Grabber, V3.1, Bun Edition`);
 console.log(`https://github.com/ChokunPlayZ/release-grabber`);
 console.log(`---------------------------`);
 console.log(`Mode: ${mode}`);
@@ -39,6 +43,8 @@ console.log(`Medusa URL: ${config.MEDUSA_URL}`);
 console.log(`qBittorrent URL: ${config.QBIT_BURL}`);
 console.log(``);
 console.log(`Discord Webhook: ${Boolean(config.WEBHOOK_URL)}`);
+console.log(``);
+console.log(`Allowed Resolutions: ${resolutions}`);
 console.log(`---------------------------`);
 console.log(`Connecting to ${config.IRC_ADDRESS} as ${config.IRC_USERNAME}`);
 
@@ -59,17 +65,13 @@ client.addListener("message#subsplease", async (nick, message) => {
 
   console.log(`${nick} -> #subsplease : ${msg}`);
 
-  // if (nick !== "NekoNeko" || !msg.includes("[Release]")) {
-  if (nick !== "Katou" || !msg.includes("[Release]")) {
-    return;
-  }
-
   const relinfo = utils.extractReleaseInformation(msg);
-  console.log(`New Release: ${relinfo.torrentName}`);
 
-  if (relinfo.resolution !== "1080p") {
-    return;
-  }
+  if (!relinfo) return;
+
+  if (!resolutions.includes(relinfo.resolution)) return;
+
+  console.log(`New Release: ${relinfo.torrentName}`);
 
   if (Boolean(config.WEBHOOK_URL)) {
     await webhook.send({

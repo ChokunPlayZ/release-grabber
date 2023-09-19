@@ -6,6 +6,7 @@ declare global {
         IRC_ADDRESS: string,
         IRC_USERNAME: string,
         NICKSERV_PASS: string,
+        ALLOWED_RESOLUTION: string,
         MEDUSA_URL: string,
         MEDUSA_API_KEY: string,
         WEBHOOK_URL: string,
