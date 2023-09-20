@@ -71,7 +71,7 @@ client.addListener("message#subsplease", async (nick, message) => {
 
   if (!resolutions.includes(relinfo.resolution)) return;
 
-  console.log(`New Release: ${relinfo.torrentName}`);
+  console.log(`New Release: ${relinfo.fileName}`);
 
   if (Boolean(config.WEBHOOK_URL)) {
     await webhook.send({
@@ -79,7 +79,7 @@ client.addListener("message#subsplease", async (nick, message) => {
         new EmbedBuilder()
           .setTitle("New Release")
           .addFields([
-            { name: "File Name", value: `${relinfo.torrentName}`, inline: false },
+            { name: "File Name", value: `${relinfo.fileName}`, inline: false },
           ])
           .setColor("#00A5FF")
           .setTimestamp()
@@ -91,23 +91,23 @@ client.addListener("message#subsplease", async (nick, message) => {
   const lookup = await medusa.GuessitLookup(
     config.MEDUSA_URL,
     config.MEDUSA_API_KEY,
-    relinfo.torrentName
+    relinfo.fileName
   );
 
   if (lookup.data.show == null) {
     console.log(
-      `"${relinfo.torrentName}" does not exist in Medusa db, not doing anything`
+      `"${relinfo.fileName}" does not exist in Medusa db, not doing anything`
     );
     return;
   }
 
   if (lookup.data.show.config.paused == true) {
-    console.log(`"${relinfo.torrentName}" is paused, not downloading`);
+    console.log(`"${relinfo.fileName}" is paused, not downloading`);
     return;
   }
 
   console.log(
-    `"${relinfo.torrentName}" marked to be downloaded, sending download command`
+    `"${relinfo.fileName}" marked to be downloaded, sending download command`
   );
   console.log("Logging into qBittorrent");
 
@@ -152,7 +152,7 @@ client.addListener("message#subsplease", async (nick, message) => {
           .setTitle("Download Command Sent!")
           .setDescription(`Sent File to qBit`)
           .addFields([
-            { name: "FileName", value: relinfo.torrentName, inline: false },
+            { name: "FileName", value: relinfo.fileName, inline: false },
             { name: "FileSize", value: relinfo.fileSize, inline: false },
           ])
           .setColor("#90EE90")
