@@ -1,23 +1,36 @@
-function extractReleaseInformation(input: string) {
-  const releaseRegex = /\[Release\] (.*(SubsPlease).*?)\.?(mkv)? \((\d+.?\d*[KMGTP]?B)\) - .* - (.*)/;
-  const releaseMatch = input.match(releaseRegex);
+function extractReleaseInformation(input) {
+  if (input.includes("[Release]")) {
+    return null;
+  } else {
+    const releaseStart = "[SubsPlease]";
+    const urlPrefix = "https://";
 
-  if (releaseMatch) {
-    const [, torrentName, releaseGroup, , torrentSize, torrentUrl] = releaseMatch;
+    // Extract file name
+    const fileNameStart = input.indexOf(releaseStart);
+    const fileNameEnd = input.indexOf(".mkv", fileNameStart) + 4;
+    const fileName = input.substring(fileNameStart, fileNameEnd).trim();
+
+    // Extract resolution from the filename
     const resolutionRegex = /\((\d+p)\)/;
-    const resolutionMatch = torrentName.match(resolutionRegex);
+    const resolutionMatch = fileName.match(resolutionRegex);
     const resolution = resolutionMatch ? resolutionMatch[1] : null;
 
+    // Extract torrent URL
+    const urlStart = input.lastIndexOf(urlPrefix);
+    const torrentUrl = input.substring(urlStart).trim();
+
+    // Extract file size
+    const fileSizeRegex = /\(([\d.]+[A-Z]+)\)/;
+    const fileSizeMatch = input.match(fileSizeRegex);
+    const fileSize = fileSizeMatch ? fileSizeMatch[1] : null;
+
     return {
-      torrentName,
-      releaseGroup,
+      fileName,
       resolution,
-      torrentSize,
       torrentUrl,
+      fileSize,
     };
   }
-
-  return null;
 }
 
 module.exports = { extractReleaseInformation };
