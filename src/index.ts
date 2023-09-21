@@ -94,14 +94,14 @@ client.addListener("message#subsplease", async (nick, message) => {
     relinfo.fileName
   );
 
-  if (lookup.data.show == null) {
+  if (!lookup.data.show) {
     console.log(
       `"${relinfo.fileName}" does not exist in Medusa db, not doing anything`
     );
     return;
   }
 
-  if (lookup.data.show.config.paused == true) {
+  if (lookup.data.show.config.paused) {
     console.log(`"${relinfo.fileName}" is paused, not downloading`);
     return;
   }

@@ -9,7 +9,7 @@ async function GuessitLookup(medusaurl: string, medusaapikey: string, filename:s
 
   const res = await fetch(`${medusaurl}/api/v2/guessit?release=${filename}`, conf);
 
-  return res;
+  return await res.json();
 }
 
 module.exports = { GuessitLookup };

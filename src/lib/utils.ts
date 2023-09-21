@@ -1,5 +1,5 @@
 function extractReleaseInformation(input) {
-  if (input.includes("[Release]")) {
+  if (!input.includes("[Release]")) {
     return null;
   } else {
     const releaseStart = "[SubsPlease]";
