@@ -56,7 +56,7 @@ const client = new irc.Client(config.IRC_ADDRESS, config.IRC_USERNAME, {
   floodProtectionDelay: 1000,
 });
 
-const qbt = qbit.Client(
+const qbt = new qbit.Client(
   config.QBIT_BURL,
   config.QBIT_USERNAME,
   config.QBIT_PASSWORD
@@ -134,7 +134,7 @@ client.addListener("message#subsplease", async (nick, message) => {
   // }
 
   console.log("Logged into qBittorrent!, Sending Download Command");
-  
+
   await qbt.addTorrent(
     relinfo.torrentUrl,
     config.QBIT_DOWNLOADPATH,
