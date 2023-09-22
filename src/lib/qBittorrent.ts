@@ -1,79 +1,122 @@
-const https = require("https");
-const axios = require("axios");
 const qs = require("qs");
 
-const http2Agent = new https.Agent({
-  rejectUnauthorized: false,
-});
+interface Client {
+  url: string;
+  username: string;
+  password: string;
+}
+class Client {
+  url: string;
+  username: string;
+  password: string;
+  #sid: string | null;
 
-async function login(qburl: string, username: string, password: string) {
-  try {
-    const response = await axios({
-      method: "POST",
-      url: `${qburl}/api/v2/auth/login`,
-      data: {
-        username: username,
-        password: password,
-      },
-      headers: {
-        Referer: `${qburl}`,
-        "Content-Type": "multipart/form-data",
-      },
-      httpsAgent: http2Agent,
-    });
+  constructor(url: string, username: string, password: string) {
+    this.url = url;
+    this.username = username;
+    this.password = password;
+    this.#sid = null;
+  }
 
-    const sid = response.headers["set-cookie"]
-      .find((cookie) => cookie.startsWith("SID="))
-      .split(";")[0]
-      .split("=")[1];
+  async login() {
+    try {
+      if (!(await this.checkLogin())) {
+        const response = await fetch(`${this.url}/api/v2/auth/login`, {
+          method: "POST",
+          body: qs.stringify({
+            username: this.username,
+            password: this.password,
+          }),
+          headers: {
+            Referer: `${this.url}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        });
 
-    return sid;
-  } catch (error) {
-    console.error(error);
-    return undefined;
+        this.#sid = response.headers
+          .get("set-cookie")!
+          .split(";")[0]
+          .split("=")[1];
+
+        return this.#sid;
+      } else {
+        return this.#sid;
+      }
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
+  async logout() {
+    try {
+      if (await this.checkLogin()) {
+        const response = await fetch(`${this.url}/api/v2/auth/logout`, {
+          method: "POST",
+          headers: {
+            Referer: `${this.url}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+            Cookie: `SID=${this.#sid}`,
+          },
+        });
+
+        this.#sid = null;
+
+        return await response.text();
+      } else {
+        return "Not logged in!";
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  async checkLogin() {
+    try {
+      const response = await fetch(`${this.url}/api/v2/app/version`, {
+        method: "GET",
+        headers: {
+          Referer: `${this.url}`,
+          Cookie: `SID=${this.#sid}`,
+        },
+      });
+
+      if (response.status === 403) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  async addTorrent(magnet: string, path: string, category: string) {
+    try {
+      if (!(await this.checkLogin())) {
+        await this.login();
+      }
+
+      const response = await fetch(`${this.url}/api/v2/torrents/add`, {
+        method: "POST",
+        body: qs.stringify({
+          urls: magnet,
+          savepath: path,
+          category: category,
+        }),
+        headers: {
+          Cookie: `SID=${this.#sid}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
-async function logout(qburl, sid) {
-  try {
-    const response = await axios({
-      method: "POST",
-      url: `${qburl}/api/v2/auth/logout`,
-      headers: {
-        Referer: `${qburl}`,
-        "Content-Type": "multipart/form-data",
-        Cookie: `SID=${sid}`,
-      },
-      httpsAgent: http2Agent,
-    });
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}
-
-async function addTorrent(qburl, sid, magnet, path, category) {
-  try {
-    const response = await axios({
-      method: "POST",
-      url: `${qburl}/api/v2/torrents/add`,
-      data: qs.stringify({
-        urls: magnet,
-        savepath: path,
-        category: category,
-      }),
-      headers: {
-        Cookie: `SID=${sid}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      httpsAgent: http2Agent,
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-module.exports = {login, logout, addTorrent}
+module.exports = { Client };
