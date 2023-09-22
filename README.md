@@ -1,6 +1,9 @@
 #  release-grabber
-a simple bun script that sits in SubsPlease IRC and grab a new release when it comes out  
+a simple and lightweight bun script that sits in SubsPlease IRC and grab a new release when it comes out  
 designed to work with [pyMedusa](https://pymedusa.com/)  
+
+also when your stuff is designed to only do one and one thing only it is super light, clocking in at just 32MB with libaries installed  
+the docker image is arround `297.2 MB` a lot more heavy since it has to include bun and other stuff  
 ## Why?
 for the past months or so, I switched to a proper PVR on my streaming stack, I have a problem with pyMedusa not being able to grabbing the release fast enough, the delay is usually 10 minutes, which is not what I wanted, I used to make pyMedusa run a daily search every 1 minute but that also spam subsplease server with request, not what I wanted to do, autobrr does not work with pyMedusa, so I come up with this
 ## How it works
@@ -70,5 +73,4 @@ everything this script relys on to function
  - [matrix org irc](https://www.npmjs.com/package/matrix-org-irc)
  - [discord.js](https://www.npmjs.com/package/discord.js)
  - [qs](https://www.npmjs.com/package/qs)
- - [axios](https://www.npmjs.com/package/axios) (waiting to be removed)
  - [PyMedusa](https://pymedusa.com/)
