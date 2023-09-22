@@ -21,19 +21,19 @@ git clone https://github.com/ChokunPlayZ/release-grabber.git
 ```bash
 cd release-grabber
 ```
-3. copy the file `example.env` and rename it to `.env`
-4. edit the file using YOUR info
-4.1. change the nickname having `|AutoDL` tailing the name is recomended
-4.2. discord webhook can be left empty, just remeber to delete the varible from the file, then the script wont try to send a webhook, it is recomended but not required
-5. install required packages
+3. copy the file `example.env` and rename it to `.env`  
+4. edit the file using YOUR info  
+4.1. change the nickname having `|AutoDL` tailing the name is recomended  
+4.2. discord webhook can be left empty, just remeber to delete the varible from the file, then the script wont try to send a webhook, it is recomended but not required  
+5. install required packages  
 ```bash
 npm i
 ```
-6. run the script using pm2
+6. run the script using pm2  
 ```bash
 pm2 start pm2.config.js
 ```
-7. verify that is is working, if it is there should probarly see a message in the channel you pointed the webhook to, if webhook isnt configured, run `pm2 log <id>` to see what the script is doing
+7. verify that is is working, if it is there should probarly see a message in the channel you pointed the webhook to, if webhook isnt configured, run `pm2 log <id>` to see what the script is doing  
 ## Docker
 1. Clone the Repo 
  ```bash
