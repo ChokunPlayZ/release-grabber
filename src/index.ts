@@ -1,4 +1,4 @@
-import irc from "node-irc";
+import irc from "matrix-org-irc";
 import fs from "fs";
 import {EmbedBuilder, WebhookClient} from "discord.js";
 
@@ -21,6 +21,8 @@ if (!isInDocker) {
 } else {
   mode = "Docker";
 }
+
+let lastping = Math.floor(Date.now() / 1000)
 
 let resolutions;
 
@@ -185,4 +187,9 @@ client.addListener("error", async (message) => {
   console.log(`IRC Client Error\n${message}`)
 });
 
-client.connect();
+client.addListener("ping", async (server) => {
+  console.log(`Ping received ID: ${server}, Since Last Ping: ${Math.floor(Date.now() / 1000) - lastping} s`)
+  lastping = Math.floor(Date.now() / 1000)
+})
+
+// client.connect();

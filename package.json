@@ -11,7 +11,6 @@
   "dependencies": {
     "discord.js": "^14.11.0",
     "matrix-org-irc": "^2.2.0",
-    "node-irc": "^0.0.5",
     "qs": "^6.11.2"
   }
 }
