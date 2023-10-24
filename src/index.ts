@@ -1,4 +1,4 @@
-import irc from "matrix-org-irc";
+import irc from "node-irc";
 import fs from "fs";
 import {EmbedBuilder, WebhookClient} from "discord.js";
 
@@ -50,7 +50,7 @@ console.log(`Connecting to ${config.IRC_ADDRESS} as ${config.IRC_USERNAME}`);
 
 const client = new irc.Client(config.IRC_ADDRESS, config.IRC_USERNAME, {
   channels: ["#subsplease"],
-  autoConnect: false,
+  autoConnect: true,
   autoRejoin: true,
   floodProtection: true,
   floodProtectionDelay: 1000,
@@ -115,23 +115,6 @@ client.addListener("message#subsplease", async (nick, message) => {
   console.log(
     `"${relinfo.fileName}" marked to be downloaded, sending download command`
   );
-
-  // if (typeof token === "undefined" || !token) {
-  //   console.log("Login failed, most likely due to invalid credentials");
-  //   if (Boolean(config.WEBHOOK_URL)) {
-  //     await webhook.send({
-  //       embeds: [
-  //         new EmbedBuilder()
-  //           .setTitle("ERROR!")
-  //           .setDescription(`qBittorrent Login Failed`)
-  //           .setColor("#F90000")
-  //           .setTimestamp()
-  //           .setFooter({ text: footer }),
-  //       ],
-  //     });
-  //   }
-  //   return;
-  // }
 
   console.log("Logged into qBittorrent!, Sending Download Command");
 
