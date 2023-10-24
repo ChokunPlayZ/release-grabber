@@ -1,11 +1,12 @@
 import irc from "matrix-org-irc";
 import fs from "fs";
 import {EmbedBuilder, WebhookClient} from "discord.js";
+import * as cron from "node-cron";
 
 // load custom libs
-const qbit = require("./lib/qBittorrent");
-const utils = require("./lib/utils");
-const medusa = require("./lib/medusa");
+import * as qbit from "./lib/qBittorrent";
+import * as utils from "./lib/utils";
+import * as medusa from "./lib/medusa";
 
 // Check if docker is connected
 const isInDocker = fs.existsSync("/.dockerenv");
@@ -191,5 +192,11 @@ client.addListener("ping", async (server) => {
   console.log(`Ping received ID: ${server}, Since Last Ping: ${Math.floor(Date.now() / 1000) - lastping} s`)
   lastping = Math.floor(Date.now() / 1000)
 })
+
+cron.schedule('* * * * *', () => {
+  if ((Math.floor(Date.now() / 1000) - lastping) > 130) {
+    console.log("Haven't received a ping in a while")
+  }
+});
 
 // client.connect();
