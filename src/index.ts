@@ -189,7 +189,7 @@ client.addListener("error", async (message) => {
 });
 
 client.addListener("ping", async (server) => {
-  console.log(`Ping received ID: ${server}, Since Last Ping: ${Math.floor(Date.now() / 1000) - lastping} s`)
+  // console.log(`Ping received from: ${server}, Since Last Ping: ${Math.floor(Date.now() / 1000) - lastping} s`)
   lastping = Math.floor(Date.now() / 1000)
 })
 
