@@ -193,9 +193,11 @@ client.addListener("ping", async (server) => {
   lastping = Math.floor(Date.now() / 1000)
 })
 
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', async () => {
   if ((Math.floor(Date.now() / 1000) - lastping) > 130) {
-    console.log("Haven't received a ping in a while")
+    console.log("Haven't received a ping in a while, reconnecting..")
+    client.disconnect()
+    client.connect()
   }
 });
 
