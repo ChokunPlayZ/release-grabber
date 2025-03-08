@@ -1,14 +1,9 @@
 const qs = require("qs");
 
-interface Client {
-  url: string;
-  username: string;
-  password: string;
-}
-class Client {
-  url: string;
-  username: string;
-  password: string;
+export class Client {
+  private url: string;
+  private username: string;
+  private password: string;
   #sid: string | null;
 
   constructor(url: string, username: string, password: string) {
@@ -118,5 +113,3 @@ class Client {
     }
   }
 }
-
-module.exports = { Client };

@@ -33,4 +33,4 @@ function extractReleaseInformation(input) {
   }
 }
 
-module.exports = { extractReleaseInformation };
+export { extractReleaseInformation };

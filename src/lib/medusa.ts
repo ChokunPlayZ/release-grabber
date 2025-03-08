@@ -12,4 +12,4 @@ async function GuessitLookup(medusaurl: string, medusaapikey: string, filename:s
   return await res.json();
 }
 
-module.exports = { GuessitLookup };
+export { GuessitLookup };
