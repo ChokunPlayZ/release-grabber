@@ -44,6 +44,7 @@ console.log(`Medusa URL: ${config.MEDUSA_URL}`);
 console.log(`qBittorrent URL: ${config.QBIT_BURL}`);
 console.log(``);
 console.log(`Discord Webhook: ${Boolean(config.WEBHOOK_URL)}`);
+console.log(`Announce Conenction: ${announceConnectionInfo}`);
 console.log(``);
 console.log(`Allowed Resolutions: ${resolutions}`);
 console.log(`---------------------------`);
