@@ -1,7 +1,6 @@
 import irc from "matrix-org-irc";
 import fs from "fs";
 import {EmbedBuilder, WebhookClient} from "discord.js";
-import * as cron from "node-cron";
 
 // load custom libs
 import * as qbit from "./lib/qBittorrent";
@@ -16,14 +15,13 @@ const config = process.env;
 
 let webhook;
 let mode;
+let announceConnectionInfo = (config.ANNOUNCE_CONNECTION == "true");
 
 if (!isInDocker) {
   mode = "Local";
 } else {
   mode = "Docker";
 }
-
-let lastping = Math.floor(Date.now() / 1000)
 
 let resolutions;
 
@@ -119,8 +117,6 @@ client.addListener("message#subsplease", async (nick, message) => {
     `"${relinfo.fileName}" marked to be downloaded, sending download command`
   );
 
-  console.log("Logged into qBittorrent!, Sending Download Command");
-
   await qbt.addTorrent(
     relinfo.torrentUrl,
     config.QBIT_DOWNLOADPATH,
@@ -147,7 +143,7 @@ client.addListener("message#subsplease", async (nick, message) => {
 
 client.addListener("registered", async () => {
   console.log(`Connected to ${config.IRC_ADDRESS},`);
-  if (Boolean(config.WEBHOOK_URL)) {
+  if (Boolean(config.WEBHOOK_URL) && announceConnectionInfo) {
     await webhook.send({
       embeds: [
         new EmbedBuilder()
@@ -169,7 +165,7 @@ client.addListener("notice", async (nick, to, text, message) => {
   if (nick == "Global") return;
   console.log(`${nick} -> me : ${text}`);
   if (text.includes("you are now recognized.")) {
-    if (Boolean(config.WEBHOOK_URL)) {
+    if (Boolean(config.WEBHOOK_URL) && announceConnectionInfo) {
       await webhook.send({
         embeds: [
           new EmbedBuilder()
@@ -186,18 +182,6 @@ client.addListener("notice", async (nick, to, text, message) => {
 
 client.addListener("error", async (message) => {
   console.log(`IRC Client Error\n${message}`)
-});
-
-client.addListener("ping", async (server) => {
-  // console.log(`Ping received from: ${server}, Since Last Ping: ${Math.floor(Date.now() / 1000) - lastping} s`)
-  lastping = Math.floor(Date.now() / 1000)
-})
-
-cron.schedule('* * * * *', async () => {
-  if ((Math.floor(Date.now() / 1000) - lastping) > 130) {
-    console.log("Haven't received a ping in a while, restarting..")
-    process.exit(0)
-  }
 });
 
 // client.connect();
